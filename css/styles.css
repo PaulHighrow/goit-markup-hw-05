@@ -20,6 +20,9 @@
   /* Переменные отступов между элементами сеток */
   --indent: 30px;
   --filter-indent: 8px;
+
+  /* Переменная скорости анимаций */
+  --animation-global: 250ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 /* Наследуемые стили */
@@ -43,10 +46,7 @@ ul {
 }
 
 /* Сброс четырехпиксельных зазоров у изображений */
-img {
-  display: block;
-}
-
+img,
 svg {
   display: block;
 }
@@ -71,9 +71,12 @@ svg {
   list-style: none;
 }
 
-/* Сброс подчеркивания для ссылок */
 .link {
+  /* Сброс подчеркивания для ссылок */
   text-decoration: none;
+
+  /* Эффект перехода для ссылок */
+  transition: color var(--animation-global);
 }
 
 /* Эффекты hover и focus для всех ссылок, кроме логотипа */
@@ -185,13 +188,48 @@ svg {
   height: 16px;
 }
 
+/* Цвет первой части логотипа */
 .logo-web {
   color: var(--accent-color);
+}
+
+/* Позиционирование псевдоэлементов относительно ссылок навигации */
+.site-nav .link {
+  position: relative;
 }
 
 /* Отметка текущей страницы */
 .link.current {
   color: var(--accent-color);
+}
+
+/* Псевдоэлемент подчеркивания ссылок навигации при ховере */
+.site-nav .link::after {
+  position: absolute;
+  left: 0;
+  /* Перекрытие псевдоэлементом нижней границы хедера */
+  bottom: -1px;
+
+  content: '';
+  display: block;
+
+  width: 100%;
+  height: 4px;
+
+  background-color: var(--accent-color);
+  border-radius: 2px;
+}
+
+/* Эффект подчеркивания ссылок навигации, кроме текущей */
+.site-nav .link:not(.current)::after {
+  transform: scaleX(0);
+  transition: transform var(--animation-global);
+}
+
+/* Масштабирование эффекта подчеркивания */
+.site-nav .link:hover::after,
+.site-nav .link:focus::after {
+  transform: scaleX(1);
 }
 
 /* =============== Стили контента главной страницы =============== */
@@ -232,7 +270,7 @@ svg {
 }
 
 /* Кнопка-герой */
-.btn.order {
+.btn-order {
   /* Размеры, рамка и отступы кнопки */
   padding: 10px 32px;
   border-radius: 4px;
@@ -248,11 +286,14 @@ svg {
   color: var(--triary-color);
   background-color: var(--accent-color);
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+
+  /* Эффект перехода для кнопки */
+  transition: background-color var(--animation-global);
 }
 
 /* Эффекты кнопки-героя */
-.btn.order:hover,
-.btn.order:focus {
+.btn-order:hover,
+.btn-order:focus {
   background-color: var(--secondary-accent-color);
 }
 
@@ -271,9 +312,6 @@ svg {
 
 /* Фон иконки и отступ от него */
 .feature .icon-box {
-  background-color: var(--secondary-bg-color);
-  border-radius: 4px;
-
   margin-bottom: 30px;
   width: 100%;
   height: 120px;
@@ -281,6 +319,9 @@ svg {
   display: inline-flex;
   align-items: center;
   justify-content: center;
+
+  background-color: var(--secondary-bg-color);
+  border-radius: 4px;
 }
 
 /* Размеры иконок */
@@ -332,9 +373,37 @@ svg {
   gap: var(--indent);
 }
 
-/* Переменная количества элементов в строке секции скиллов */
 .skills.item {
+  /* Позиционирование оверлея относительно элемента списка */
+  position: relative;
+
+  /* Переменная количества элементов в строке секции скиллов */
   --items: 3;
+}
+
+.skills-overlay {
+  /* Позиционирование оверлея относительно элемента списка */
+  position: absolute;
+  left: 0;
+  bottom: 0;
+
+  /* Растягивание оверлея на всю ширину блока */
+  width: 100%;
+
+  /* Внутренние поля оверлея */
+  padding: 27px 10px;
+
+  /* Цвет оверлея */
+  background-color: rgba(47, 48, 58, 0.8);
+}
+
+/* Cтиль текста в оверлее */
+.skills-text {
+  font-size: 14px;
+  line-height: 1.14;
+  text-align: center;
+  text-transform: uppercase;
+  color: var(--triary-color);
 }
 
 /* =============== Команда =============== */
@@ -409,6 +478,9 @@ svg {
   height: 44px;
   border-radius: 50%;
   fill: var(--customer-color);
+
+  /* Эффект перехода для ссылок соцсетей */
+  transition: fill var(--animation-global), background-color var(--animation-global);
 }
 
 /* Оформление ссылок соцсетей футера, перенесены сюда для соблюдения правил каскадности */
@@ -460,6 +532,9 @@ svg {
   display: flex;
   justify-content: center;
   align-items: center;
+
+  /* Эффекты перехода для списка постоянных клиентов */
+  transition: fill var(--animation-global), border-color var(--animation-global);
 }
 
 /* Размеры иконки */
@@ -563,18 +638,18 @@ svg {
   background-color: var(--secondary-bg-color);
   border: none;
   border-radius: 4px;
+
+  /* Эффекты перехода для кнопок фильтра */
+  transition: color var(--animation-global), background-color var(--animation-global),
+    box-shadow var(--animation-global);
 }
 
-/* Эффект кнопки, выбранной по умолчанию */
-.btn.current {
-  color: var(--triary-color);
-  background-color: var(--accent-color);
-}
-
-/* Эффекты кнопок фильтра */
+/* Эффекты кнопок фильтра при активации, ховере и фокусе*/
 .btn:hover,
 .btn:focus,
-.btn:active {
+.btn:active,
+/* Эффект кнопки, выбранной по умолчанию */
+.btn.active {
   color: var(--triary-color);
   background-color: var(--accent-color);
   box-shadow: 0px 3px 1px rgba(0, 0, 0, 0.1), 0px 1px 2px rgba(0, 0, 0, 0.08),
@@ -593,12 +668,53 @@ svg {
   --items: 3;
 }
 
-/* Сброс подчеркивания для ссылок карточек */
 .card-link {
+  /* Сброс подчеркивания для ссылок карточек */
   text-decoration: none;
 
   /* Изменение типа блочной модели элемента для реализации декоративных эффектов */
   display: block;
+
+  /* Эффект перехода для ссылок карточек портфолио */
+  transition: box-shadow var(--animation-global);
+}
+
+.card-img-box {
+  /* Позиционирование оверлея относительно картинки */
+  position: relative;
+
+  /* Скрыть переполняющие элементы */
+  overflow: hidden;
+}
+
+/* Оверлей карточек */
+.card-overlay {
+  /* Позиционирование оверлея на всю ширтну картинки */
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  /* Размер и поля оверлея */
+  width: 100%;
+  height: 100%;
+  padding: 63px 24px;
+
+  /* Фон оверлея */
+  background-color: rgba(33, 150, 243, 0.9);
+
+  /* Смещение и прозрачность оверлея */
+  opacity: 0;
+  transform: translateY(100%);
+
+  /* Эффекты перехода оверлея */
+  transition: transform var(--animation-global), opacity var(--animation-global);
+}
+
+/* Стили текста оверлея */
+.card-overlay-text {
+  font-size: 18px;
+  line-height: 1.56;
+  color: var(--triary-color);
 }
 
 /* Тень карточки при ховере и фокусе */
@@ -606,6 +722,13 @@ svg {
 .card-link:focus {
   box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.12), 0px 4px 4px rgba(0, 0, 0, 0.06),
     1px 4px 6px rgba(0, 0, 0, 0.16);
+}
+
+/* Перемещение оверлея в видимое состояние при ховере */
+.card-link:hover .card-overlay,
+.card-link:focus .card-overlay {
+  transform: translateY(0%);
+  opacity: 1;
 }
 
 /* Стили контейнера для подписей карточек */
@@ -629,4 +752,101 @@ svg {
   color: var(--main-color);
   font-size: 16px;
   line-height: 1.88;
+}
+
+/*
+  |==============================
+  | Бэкдроп и модальное окно
+  |==============================
+*/
+
+/* Бэкдроп */
+.backdrop {
+  /* Позиционирование бэкдропа  */
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  /* Размеры бэкдропа относительно вьюпорта */
+  width: 100vw;
+  height: 100vh;
+
+  /* Полупрозрачный фон бэкдропа */
+  background-color: rgba(0, 0, 0, 0.2);
+
+  /* Эффект перехода при открытии и закрытии модального окна */
+  transition: visibility var(--animation-global), opacity var(--animation-global);
+}
+
+/* Скрытый бэкдроп */
+.backdrop.is-hidden {
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* Эффект "лопнувшей формы", центрирование при закрытии модального окна */
+.backdrop.is-hidden .modal {
+  transform: translate(-50%, -50%) scale(1.05);
+  opacity: 0;
+}
+
+/* Модальное окно */
+.modal {
+  /* Позиционирование модального окна в бэкдропе */
+  position: absolute;
+  top: 50%;
+  left: 50%;
+
+  /* Цен */
+  transform: translate(-50%, -50%) scale(1);
+
+  /* Приблизительные размеры модального окна */
+  min-width: 530px;
+  min-height: 580px;
+
+  /* Оформление модального окна */
+  background: var(--triary-color);
+  box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.12), 0px 1px 1px rgba(0, 0, 0, 0.14),
+    0px 2px 1px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+
+  transition: transform var(--animation-global), opacity var(--animation-global);
+}
+
+/* Кнопка закрытия модального окна */
+.modal-close {
+  /* Позиционирование кнопки */
+  position: absolute;
+  top: 8px;
+  right: 8px;
+
+  /* Выравнивание иконки */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* Размеры кнопки */
+  width: 30px;
+  height: 30px;
+  padding: 6px;
+
+  /* Рамка кнопки */
+  background-color: var(--triary-color);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 50%;
+
+  /* Эффект перехода */
+  transition: fill var(--animation-global);
+}
+
+.modal-close:hover,
+.modal-close:focus {
+  fill: var(--accent-color);
+}
+
+/* Размеры иконки */
+.modal-icon {
+  min-width: 18px;
+  height: 18px;
 }

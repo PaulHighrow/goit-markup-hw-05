@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Homework 3" />
+    <meta name="description" content="Homework 5" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link
@@ -18,6 +18,7 @@
       crossorigin="anonymous"
       referrerpolicy="no-referrer"
     />
+
     <link rel="stylesheet" href="./css/styles.css" />
     <title>WebStudio</title>
   </head>
@@ -26,7 +27,7 @@
     <!-- Шапка -->
     <header class="header border">
       <div class="header container">
-        <a class="header logo link" href="https://paulhighrow.github.io/goit-markup-hw-04/"
+        <a class="header logo link" href="https://paulhighrow.github.io/goit-markup-hw-05/"
           ><span class="logo-web">Web</span>Studio</a
         >
         <nav>
@@ -63,7 +64,8 @@
       <section class="hero section">
         <div class="container">
           <h1 class="hero-title">Эффективные решения для вашего бизнеса</h1>
-          <button class="btn order" type="button">Заказать услугу</button>
+          <!-- Кнопка открытия модального окна -->
+          <button class="btn-order" type="button" data-modal-open>Заказать услугу</button>
         </div>
       </section>
 
@@ -127,13 +129,22 @@
           <h2 class="skills-title">Чем мы занимаемся</h2>
           <ul class="skills list">
             <li class="skills item">
-              <img src="./images/img1.jpg" alt="Создание сайтов" width="370" />
+              <img src="./images/img1.jpg" alt="Десктопные приложения" width="370" />
+              <div class="skills-overlay">
+                <h3 class="skills-text">Десктопные приложения</h3>
+              </div>
             </li>
             <li class="skills item">
-              <img src="./images/img2.jpg" alt="Адаптивная верстка" width="370" />
+              <img src="./images/img2.jpg" alt="Мобильные приложения" width="370" />
+              <div class="skills-overlay">
+                <h3 class="skills-text">Мобильные приложения</h3>
+              </div>
             </li>
             <li class="skills item">
-              <img src="./images/img3.jpg" alt="Настройка стилей" width="370" />
+              <img src="./images/img3.jpg" alt="Дизайнерские решения" width="370" />
+              <div class="skills-overlay">
+                <h3 class="skills-text">Дизайнерские решения</h3>
+              </div>
             </li>
           </ul>
         </div>
@@ -484,7 +495,7 @@
     <footer class="footer">
       <div class="container">
         <div class="address-container">
-          <a class="footer logo link" href="https://paulhighrow.github.io/goit-markup-hw-04/"
+          <a class="footer logo link" href="https://paulhighrow.github.io/goit-markup-hw-05/"
             ><span class="logo-web">Web</span>Studio</a
           >
           <address class="contacts-footer">
@@ -569,5 +580,20 @@
         </div>
       </div>
     </footer>
+
+    <!-- Бэкдроп -->
+    <div class="backdrop is-hidden" data-modal>
+      <div class="modal">
+        <!-- Кнопка закрытия модального окна -->
+        <button class="modal-close" type="button" data-modal-close>
+          <svg class="modal-icon">
+            <use href="./images/icons.svg#close"></use>
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <!-- Скрипт модального окна -->
+    <script src="./js/modal.js"></script>
   </body>
 </html>
